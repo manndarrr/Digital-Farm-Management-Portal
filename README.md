@@ -39,7 +39,9 @@ To ensure data integrity and prevent "paper-trail" manipulation, this portal uti
 
 ---
 
-## System Preview
+## System Overview
+
+### Dashboard Preview
 <p align="center">
   <img src="System_Overview.png" width="850" title="System Architecture">
 </p>
