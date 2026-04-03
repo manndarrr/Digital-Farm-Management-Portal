@@ -1,0 +1,451 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Settings - Digital Farm Management Portal</title>
+  <meta name="description" content="System settings and configuration for farm management portal" />
+  <style>
+    :root{--bg:#f6f5f2;--card:#ffffff;--muted:#6b7280;--accent:#0f172a;--primary:#0b6cff;--success:#1ea67a}
+    *{box-sizing:border-box;font-family:Inter,ui-sans-serif,system-ui,Arial,Helvetica,sans-serif}
+    body{margin:0;background:linear-gradient(180deg,#fbfaf8 0%,#f6f5f2 100%);color:var(--accent);min-height:100vh}
+    
+    /* Enhanced Header */
+    header{
+      background:rgba(255,255,255,0.95);
+      backdrop-filter:blur(10px);
+      border-bottom:1px solid rgba(11,17,34,0.1);
+      box-shadow:0 4px 20px rgba(11,17,34,0.08);
+      position:sticky;
+      top:0;
+      z-index:100;
+    }
+    .header-content{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:16px 28px;
+      max-width:1400px;
+      margin:0 auto;
+    }
+    .brand{display:flex;gap:16px;align-items:center}
+    .logo{
+      width:48px;
+      height:48px;
+      border-radius:12px;
+      background:linear-gradient(135deg,#0b6cff,#4f46e5);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:white;
+      font-weight:800;
+      font-size:18px;
+      box-shadow:0 4px 12px rgba(11,108,255,0.3);
+    }
+    .title{font-size:20px;font-weight:700;color:var(--accent)}
+    .subtitle{font-size:13px;color:var(--muted);margin-top:2px}
+    
+    .nav-links{display:flex;gap:8px;align-items:center}
+    .nav-link{
+      padding:10px 16px;
+      border-radius:8px;
+      text-decoration:none;
+      color:var(--muted);
+      font-weight:600;
+      font-size:14px;
+      transition:all 0.2s ease;
+      border:1px solid transparent;
+    }
+    .nav-link:hover{background:rgba(11,108,255,0.08);color:var(--primary)}
+    .nav-link.active{background:var(--primary);color:white;box-shadow:0 2px 8px rgba(11,108,255,0.3)}
+    
+    .header-actions{display:flex;gap:12px;align-items:center}
+    .team-badge{
+      padding:6px 12px;
+      background:linear-gradient(90deg,#f8f9fa,#e9ecef);
+      border-radius:6px;
+      font-size:12px;
+      color:var(--muted);
+      font-weight:600;
+    }
+    
+    main{padding:24px;max-width:1400px;margin:0 auto}
+    .panel{background:var(--card);border-radius:16px;padding:24px;box-shadow:0 8px 32px rgba(11,17,34,0.06);border:1px solid rgba(11,17,34,0.04)}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:8px;background:var(--primary);color:white;font-weight:600;border:none;cursor:pointer;transition:all 0.2s ease}
+    .btn:hover{background:#0952cc;transform:translateY(-1px)}
+    .btn-danger{background:#ef4444}
+    .btn-danger:hover{background:#dc2626}
+    .btn-secondary{background:#f1f5f9;color:var(--accent)}
+    .btn-secondary:hover{background:#e2e8f0}
+    
+    .setting-group{margin-bottom:32px}
+    .setting-title{font-size:18px;font-weight:700;margin-bottom:8px}
+    .setting-desc{color:var(--muted);margin-bottom:16px;line-height:1.5}
+    .setting-item{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:16px;
+      background:#f8fafc;
+      border-radius:8px;
+      margin-bottom:12px;
+    }
+    .setting-item:last-child{margin-bottom:0}
+    .setting-label{font-weight:600}
+    .setting-sublabel{font-size:13px;color:var(--muted);margin-top:2px}
+    
+    .toggle{
+      position:relative;
+      display:inline-block;
+      width:48px;
+      height:24px;
+    }
+    .toggle input{opacity:0;width:0;height:0}
+    .slider{
+      position:absolute;
+      cursor:pointer;
+      top:0;
+      left:0;
+      right:0;
+      bottom:0;
+      background-color:#ccc;
+      transition:.4s;
+      border-radius:24px;
+    }
+    .slider:before{
+      position:absolute;
+      content:"";
+      height:18px;
+      width:18px;
+      left:3px;
+      bottom:3px;
+      background-color:white;
+      transition:.4s;
+      border-radius:50%;
+    }
+    input:checked + .slider{background-color:var(--primary)}
+    input:checked + .slider:before{transform:translateX(24px)}
+    
+    .form-group{margin-bottom:16px}
+    .form-label{display:block;margin-bottom:6px;font-weight:600}
+    .form-input{
+      width:100%;
+      padding:10px 12px;
+      border:1px solid #e2e8f0;
+      border-radius:6px;
+      font-size:14px;
+    }
+    .form-input:focus{border-color:var(--primary);outline:none}
+    .form-select{
+      width:100%;
+      padding:10px 12px;
+      border:1px solid #e2e8f0;
+      border-radius:6px;
+      font-size:14px;
+      background:white;
+    }
+    
+    .alert{
+      padding:12px 16px;
+      border-radius:8px;
+      margin-bottom:16px;
+    }
+    .alert-warning{
+      background:#fef3c7;
+      color:#92400e;
+      border:1px solid #fcd34d;
+    }
+    .alert-info{
+      background:#dbeafe;
+      color:#1e40af;
+      border:1px solid #93c5fd;
+    }
+    
+    @media(max-width:768px){
+      .header-content{padding:12px 16px}
+      .nav-links{display:none}
+      main{padding:16px}
+      .setting-item{flex-direction:column;align-items:flex-start;gap:12px}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <div class="brand">
+        <div class="logo">FM</div>
+        <div>
+          <div class="title">Digital Farm Management Portal</div>
+          <div class="subtitle">MRL & AMU Compliance System</div>
+        </div>
+      </div>
+      
+      <nav class="nav-links">
+        <a href="dashboard.html" class="nav-link">Dashboard</a>
+        <a href="mobile-preview.html" class="nav-link">Mobile App</a>
+        <a href="reports.html" class="nav-link">Reports</a>
+        <a href="settings.html" class="nav-link active">Settings</a>
+      </nav>
+      
+      <div class="header-actions">
+        <div class="team-badge">Team Renaissance</div>
+        <button class="btn" onclick="saveSettings()">💾 Save Changes</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div style="margin-bottom:24px">
+      <h1 style="margin:0;font-size:28px;font-weight:800">⚙️ System Settings</h1>
+      <p style="color:var(--muted);margin:8px 0 0 0">Configure system preferences and compliance parameters</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:2fr 1fr;gap:24px">
+      <div>
+        <div class="panel setting-group">
+          <div class="setting-title">🔔 Notifications</div>
+          <div class="setting-desc">Configure alert preferences and notification settings</div>
+          
+          <div class="setting-item">
+            <div>
+              <div class="setting-label">MRL Alert Notifications</div>
+              <div class="setting-sublabel">Get notified when samples approach MRL limits</div>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+          
+          <div class="setting-item">
+            <div>
+              <div class="setting-label">Daily Compliance Reports</div>
+              <div class="setting-sublabel">Receive daily summary of compliance status</div>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+          
+          <div class="setting-item">
+            <div>
+              <div class="setting-label">System Maintenance Alerts</div>
+              <div class="setting-sublabel">Get notified about system updates and maintenance</div>
+            </div>
+            <label class="toggle">
+              <input type="checkbox">
+              <span class="slider"></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="panel setting-group">
+          <div class="setting-title">📊 Compliance Parameters</div>
+          <div class="setting-desc">Set MRL thresholds and compliance monitoring parameters</div>
+          
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+            <div class="form-group">
+              <label class="form-label">MRL Warning Threshold (%)</label>
+              <input type="number" class="form-input" value="85" min="50" max="95">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Critical Alert Threshold (%)</label>
+              <input type="number" class="form-input" value="95" min="80" max="100">
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label">Default Withdrawal Period (days)</label>
+            <select class="form-select">
+              <option value="3">3 days</option>
+              <option value="5" selected>5 days</option>
+              <option value="7">7 days</option>
+              <option value="14">14 days</option>
+            </select>
+          </div>
+          
+          <div class="alert alert-info">
+            <strong>Info:</strong> These parameters affect compliance scoring and alert generation across all farms.
+          </div>
+        </div>
+
+        <div class="panel setting-group">
+          <div class="setting-title">🏥 Veterinarian Settings</div>
+          <div class="setting-desc">Configure veterinarian approval and verification settings</div>
+          
+          <div class="setting-item">
+            <div>
+              <div class="setting-label">Require Vet Approval for High-Risk Drugs</div>
+              <div class="setting-sublabel">Mandate veterinarian approval for controlled substances</div>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+          
+          <div class="setting-item">
+            <div>
+              <div class="setting-label">Auto-assign Critical Cases</div>
+              <div class="setting-sublabel">Automatically assign flagged samples to available vets</div>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label">Sample Review Timeout (hours)</label>
+            <select class="form-select">
+              <option value="24">24 hours</option>
+              <option value="48" selected>48 hours</option>
+              <option value="72">72 hours</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="panel setting-group">
+          <div class="setting-title">🔐 Security & Blockchain</div>
+          <div class="setting-desc">Configure data security and blockchain settings</div>
+          
+          <div class="setting-item">
+            <div>
+              <div class="setting-label">Enable Blockchain Verification</div>
+              <div class="setting-sublabel">Store treatment records on blockchain for immutability</div>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+          
+          <div class="setting-item">
+            <div>
+              <div class="setting-label">Data Encryption at Rest</div>
+              <div class="setting-sublabel">Encrypt sensitive farm data when stored</div>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label">Data Retention Period (months)</label>
+            <select class="form-select">
+              <option value="12">12 months</option>
+              <option value="24" selected>24 months</option>
+              <option value="36">36 months</option>
+              <option value="60">60 months</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="panel" style="margin-bottom:24px">
+          <h3 style="margin:0 0 16px 0">💡 System Status</h3>
+          
+          <div style="margin-bottom:16px">
+            <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+              <span>API Health</span>
+              <span style="color:var(--success);font-weight:600">●  Online</span>
+            </div>
+            <div style="font-size:12px;color:var(--muted)">Last check: 2 minutes ago</div>
+          </div>
+          
+          <div style="margin-bottom:16px">
+            <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+              <span>Database</span>
+              <span style="color:var(--success);font-weight:600">●  Connected</span>
+            </div>
+            <div style="font-size:12px;color:var(--muted)">Storage: 120GB / 500GB used</div>
+          </div>
+          
+          <div style="margin-bottom:16px">
+            <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+              <span>Blockchain Sync</span>
+              <span style="color:var(--success);font-weight:600">●  Synced</span>
+            </div>
+            <div style="font-size:12px;color:var(--muted)">Latest block: #2,847,293</div>
+          </div>
+          
+          <button class="btn btn-secondary" style="width:100%" onclick="refreshStatus()">🔄 Refresh Status</button>
+        </div>
+
+        <div class="panel" style="margin-bottom:24px">
+          <h3 style="margin:0 0 16px 0">👥 User Management</h3>
+          
+          <div style="margin-bottom:12px">
+            <strong>Active Users: 47</strong>
+            <div style="font-size:12px;color:var(--muted)">Farmers: 38 | Vets: 6 | Admins: 3</div>
+          </div>
+          
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <button class="btn btn-secondary" onclick="manageUsers()">👤 Manage Users</button>
+            <button class="btn btn-secondary" onclick="viewPermissions()">🔑 View Permissions</button>
+            <button class="btn btn-secondary" onclick="auditLogs()">📜 Audit Logs</button>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h3 style="margin:0 0 16px 0">⚠️ Maintenance</h3>
+          
+          <div class="alert alert-warning">
+            <strong>Scheduled Maintenance:</strong><br>
+            System maintenance on Oct 15, 2025 from 2:00 AM - 4:00 AM IST
+          </div>
+          
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <button class="btn btn-secondary" onclick="backupData()">💾 Backup Data</button>
+            <button class="btn btn-secondary" onclick="systemDiagnostics()">🔍 Run Diagnostics</button>
+            <button class="btn btn-danger" onclick="confirmReset()">🔄 Factory Reset</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    function saveSettings() {
+      alert('Settings saved successfully! Changes will take effect immediately.');
+    }
+
+    function refreshStatus() {
+      alert('Refreshing system status... All systems operational.');
+    }
+
+    function manageUsers() {
+      alert('Opening user management panel...');
+    }
+
+    function viewPermissions() {
+      alert('Loading permission matrix...');
+    }
+
+    function auditLogs() {
+      alert('Generating audit logs report...');
+    }
+
+    function backupData() {
+      if (confirm('Start data backup? This may take several minutes.')) {
+        alert('Backup initiated. You will receive an email when complete.');
+      }
+    }
+
+    function systemDiagnostics() {
+      alert('Running system diagnostics... Results will be displayed in the admin panel.');
+    }
+
+    function confirmReset() {
+      if (confirm('WARNING: This will reset all settings to default values. Are you sure?')) {
+        if (confirm('This action cannot be undone. Proceed with factory reset?')) {
+          alert('Factory reset initiated. System will restart in maintenance mode.');
+        }
+      }
+    }
+  </script>
+</body>
+</html>

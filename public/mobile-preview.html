@@ -1,0 +1,441 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Mobile App Preview - Digital Farm Management Portal</title>
+  <meta name="description" content="Mobile App Preview for Digital Farm Management Portal" />
+  <meta name="author" content="Team Renaissance" />
+  <style>
+    :root{--bg:#f6f5f2;--card:#ffffff;--muted:#6b7280;--accent:#0f172a;--primary:#0b6cff;--success:#1ea67a}
+    *{box-sizing:border-box;font-family:Inter,ui-sans-serif,system-ui,Arial,Helvetica,sans-serif}
+    body{margin:0;background:linear-gradient(180deg,#fbfaf8 0%,#f6f5f2 100%);color:var(--accent);min-height:100vh}
+    
+    /* Enhanced Header */
+    header{
+      background:rgba(255,255,255,0.95);
+      backdrop-filter:blur(10px);
+      border-bottom:1px solid rgba(11,17,34,0.1);
+      box-shadow:0 4px 20px rgba(11,17,34,0.08);
+      position:sticky;
+      top:0;
+      z-index:100;
+    }
+    .header-content{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:16px 28px;
+      max-width:1400px;
+      margin:0 auto;
+    }
+    .brand{display:flex;gap:16px;align-items:center}
+    .logo{
+      width:48px;
+      height:48px;
+      border-radius:12px;
+      background:linear-gradient(135deg,#0b6cff,#4f46e5);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:white;
+      font-weight:800;
+      font-size:18px;
+      box-shadow:0 4px 12px rgba(11,108,255,0.3);
+    }
+    .title{font-size:20px;font-weight:700;color:var(--accent)}
+    .subtitle{font-size:13px;color:var(--muted);margin-top:2px}
+    
+    .nav-links{display:flex;gap:8px;align-items:center}
+    .nav-link{
+      padding:10px 16px;
+      border-radius:8px;
+      text-decoration:none;
+      color:var(--muted);
+      font-weight:600;
+      font-size:14px;
+      transition:all 0.2s ease;
+      border:1px solid transparent;
+    }
+    .nav-link:hover{background:rgba(11,108,255,0.08);color:var(--primary)}
+    .nav-link.active{background:var(--primary);color:white;box-shadow:0 2px 8px rgba(11,108,255,0.3)}
+    
+    .header-actions{display:flex;gap:12px;align-items:center}
+    .team-badge{
+      padding:6px 12px;
+      background:linear-gradient(90deg,#f8f9fa,#e9ecef);
+      border-radius:6px;
+      font-size:12px;
+      color:var(--muted);
+      font-weight:600;
+    }
+    
+    main{padding:24px;max-width:1400px;margin:0 auto;display:grid;grid-template-columns:1fr 400px;gap:32px}
+    .panel{background:var(--card);border-radius:16px;padding:24px;box-shadow:0 8px 32px rgba(11,17,34,0.06);border:1px solid rgba(11,17,34,0.04)}
+    
+    .phone{
+      width:380px;
+      height:760px;
+      border-radius:32px;
+      background:linear-gradient(145deg,#1e293b,#0f172a);
+      padding:16px;
+      color:white;
+      box-shadow:0 20px 60px rgba(2,6,23,0.4);
+      position:relative;
+      overflow:hidden;
+    }
+    .phone::before{
+      content:'';
+      position:absolute;
+      top:8px;
+      left:50%;
+      transform:translateX(-50%);
+      width:120px;
+      height:4px;
+      background:rgba(255,255,255,0.3);
+      border-radius:2px;
+    }
+    .screen{
+      background:linear-gradient(180deg,#f8fbff,#ffffff);
+      height:100%;
+      border-radius:20px;
+      padding:16px;
+      color:var(--accent);
+      overflow:auto;
+      position:relative;
+    }
+    .nav{display:flex;gap:8px;justify-content:space-between;margin-bottom:16px;align-items:center}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:10px;background:var(--primary);color:white;font-weight:600;border:none;cursor:pointer;font-size:13px;transition:all 0.2s ease}
+    .btn:hover{background:#0952cc;transform:translateY(-1px)}
+    .mutebtn{background:#f1f5f9;color:var(--muted);font-weight:600;border:none;padding:8px 12px;border-radius:8px;cursor:pointer;font-size:12px;transition:all 0.2s ease}
+    .mutebtn:hover{background:#e2e8f0}
+    .small{font-size:12px;color:var(--muted)}
+    .pill{display:inline-block;padding:6px 12px;border-radius:999px;background:#eefaf6;color:var(--success);font-weight:600;font-size:12px}
+    
+    .farm-stats{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+      margin-top:16px;
+    }
+    .stat-card{
+      background:linear-gradient(135deg,#f8fafc,#e2e8f0);
+      padding:12px;
+      border-radius:10px;
+      text-align:center;
+      border:1px solid rgba(11,17,34,0.06);
+    }
+    .stat-number{font-size:18px;font-weight:800;color:var(--primary)}
+    .stat-label{font-size:11px;color:var(--muted);margin-top:4px}
+    
+    .activity-item{
+      padding:12px;
+      background:#f8fafc;
+      border-radius:10px;
+      margin-bottom:8px;
+      border-left:4px solid var(--primary);
+    }
+    .activity-time{font-size:11px;color:var(--muted)}
+    .activity-desc{font-size:13px;font-weight:600;margin-top:2px}
+    
+    .weather-card{
+      background:linear-gradient(135deg,#dbeafe,#bfdbfe);
+      padding:16px;
+      border-radius:12px;
+      margin-top:16px;
+      text-align:center;
+    }
+    .weather-temp{font-size:24px;font-weight:800;color:#1e40af}
+    .weather-desc{font-size:12px;color:#1e40af;margin-top:4px}
+    
+    @media(max-width:768px){
+      .header-content{padding:12px 16px}
+      .nav-links{display:none}
+      main{grid-template-columns:1fr;padding:16px;gap:20px}
+      .phone{width:100%;height:600px}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <div class="brand">
+        <div class="logo">FM</div>
+        <div>
+          <div class="title">Digital Farm Management Portal</div>
+          <div class="subtitle">MRL & AMU Compliance System</div>
+        </div>
+      </div>
+      
+      <nav class="nav-links">
+        <a href="dashboard.html" class="nav-link">Dashboard</a>
+        <a href="mobile-preview.html" class="nav-link active">Mobile App</a>
+        <a href="reports.html" class="nav-link">Reports</a>
+        <a href="settings.html" class="nav-link">Settings</a>
+      </nav>
+      
+      <div class="header-actions">
+        <div class="team-badge">Team Renaissance</div>
+        <button class="btn">📱 Download App</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <div class="panel">
+        <h2 style="margin:0 0 16px 0;font-size:24px;font-weight:700">📱 Mobile App Features</h2>
+        
+        <div style="display:grid;gap:20px">
+          <div>
+            <h3 style="font-size:18px;margin:0 0 12px 0;color:var(--primary)">🌟 Key Features</h3>
+            <ul style="color:var(--muted);line-height:1.7;margin:0;padding-left:20px">
+              <li><strong>Offline Support:</strong> Works in low-connectivity rural areas</li>
+              <li><strong>Real-time Sync:</strong> Data syncs when connection is available</li>
+              <li><strong>QR Code Scanner:</strong> Quick animal and drug identification</li>
+              <li><strong>Voice Notes:</strong> Record treatment details hands-free</li>
+              <li><strong>Photo Documentation:</strong> Visual evidence of treatments</li>
+              <li><strong>GPS Tracking:</strong> Location-based farm management</li>
+            </ul>
+          </div>
+          
+          <div>
+            <h3 style="font-size:18px;margin:0 0 12px 0;color:var(--success)">🛡️ Compliance Features</h3>
+            <ul style="color:var(--muted);line-height:1.7;margin:0;padding-left:20px">
+              <li><strong>MRL Monitoring:</strong> Real-time residue level tracking</li>
+              <li><strong>Withdrawal Period Calculator:</strong> Automated safety periods</li>
+              <li><strong>Vet Prescription Integration:</strong> Digital prescription management</li>
+              <li><strong>Audit Trail:</strong> Complete treatment history</li>
+              <li><strong>Compliance Alerts:</strong> Smart notifications for violations</li>
+            </ul>
+          </div>
+          
+          <div>
+            <h3 style="font-size:18px;margin:0 0 12px 0;color:#f59e0b">📊 Data Analytics</h3>
+            <ul style="color:var(--muted);line-height:1.7;margin:0;padding-left:20px">
+              <li><strong>Treatment Patterns:</strong> Usage analytics and trends</li>
+              <li><strong>Cost Analysis:</strong> Treatment cost optimization</li>
+              <li><strong>Health Insights:</strong> Animal health trend analysis</li>
+              <li><strong>Predictive Alerts:</strong> AI-powered health predictions</li>
+            </ul>
+          </div>
+          
+          <div class="panel" style="background:linear-gradient(135deg,#fef3c7,#fde68a);border:none">
+            <h3 style="font-size:16px;margin:0 0 8px 0;color:#92400e">🎯 Pilot Program Status</h3>
+            <div style="color:#92400e;font-size:14px;line-height:1.6">
+              <strong>Phase 1:</strong> Completed - 50 farms onboarded<br>
+              <strong>Phase 2:</strong> In Progress - Training 200 farmers<br>
+              <strong>Phase 3:</strong> Planned - State-wide rollout
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <aside>
+      <div class="panel">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+          <strong style="font-size:16px">📱 Interactive Demo</strong>
+          <div class="small" style="background:#e0f2fe;padding:4px 8px;border-radius:4px;color:#0369a1">Live Preview</div>
+        </div>
+
+        <div class="phone" role="img" aria-label="phone mockup">
+          <div class="screen" id="phone-screen">
+            <div class="nav">
+              <div style="font-weight:700;font-size:16px">🌾 Krishi Sarthi</div>
+              <div style="display:flex;gap:6px">
+                <button class="mutebtn" onclick="showScreen('home')">Home</button>
+                <button class="mutebtn" onclick="showScreen('record')">Record</button>
+                <button class="mutebtn" onclick="showScreen('alerts')">Alerts</button>
+                <button class="mutebtn" onclick="showScreen('stats')">Stats</button>
+              </div>
+            </div>
+
+            <div id="screen-home">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+                <div>
+                  <div style="font-weight:700;font-size:16px">🏡 Farm: KRN-001</div>
+                  <div class="small">Last sync: 2 hours ago</div>
+                </div>
+                <div class="pill">✅ Certified</div>
+              </div>
+
+              <div class="weather-card">
+                <div class="weather-temp">24°C</div>
+                <div class="weather-desc">☀️ Sunny - Perfect for grazing</div>
+              </div>
+
+              <div style="margin-top:16px">
+                <div style="font-weight:700;margin-bottom:12px">⚡ Quick Actions</div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+                  <button class="btn" onclick="showScreen('record')" style="font-size:12px">➕ Add Treatment</button>
+                  <button class="mutebtn" onclick="showScreen('alerts')" style="font-size:12px">⚠️ View Alerts</button>
+                  <button class="mutebtn" onclick="showScreen('stats')" style="font-size:12px">📊 Farm Stats</button>
+                  <button class="mutebtn" onclick="alert('QR Scanner opened')" style="font-size:12px">📷 QR Scan</button>
+                </div>
+              </div>
+
+              <div class="farm-stats">
+                <div class="stat-card">
+                  <div class="stat-number">47</div>
+                  <div class="stat-label">🐄 Total Animals</div>
+                </div>
+                <div class="stat-card">
+                  <div class="stat-number">96%</div>
+                  <div class="stat-label">🎯 Compliance</div>
+                </div>
+                <div class="stat-card">
+                  <div class="stat-number">12</div>
+                  <div class="stat-label">💊 Active Treatments</div>
+                </div>
+                <div class="stat-card">
+                  <div class="stat-number">3</div>
+                  <div class="stat-label">📋 Pending Tasks</div>
+                </div>
+              </div>
+            </div>
+
+            <div id="screen-record" style="display:none">
+              <div style="font-weight:700;font-size:16px;margin-bottom:8px">💊 Record Treatment</div>
+              <div class="small" style="margin-bottom:16px">Enter treatment details — data will be encrypted & stored securely.</div>
+              
+              <div style="display:flex;flex-direction:column;gap:12px">
+                <input id="f-farm" placeholder="Farm ID (e.g. KRN-001)" style="padding:12px;border-radius:8px;border:1px solid #e6eef8;font-size:14px" />
+                <select id="f-animal" style="padding:12px;border-radius:8px;border:1px solid #e6eef8;font-size:14px">
+                  <option>Select Animal</option>
+                  <option>Cow - ID: COW-001</option>
+                  <option>Buffalo - ID: BUF-001</option>
+                  <option>Goat - ID: GOT-001</option>
+                </select>
+                <input id="f-drug" placeholder="Drug & dosage (e.g. Oxytet 10mg)" style="padding:12px;border-radius:8px;border:1px solid #e6eef8;font-size:14px" />
+                
+                <div style="display:flex;gap:8px">
+                  <button class="btn" onclick="alert('📷 Photo captured')" style="flex:1;font-size:12px">📷 Photo</button>
+                  <button class="btn" onclick="alert('🎤 Voice note recorded')" style="flex:1;font-size:12px">🎤 Voice</button>
+                </div>
+                
+                <button class="btn" onclick="submitTreatment()" style="background:var(--success)">✅ Submit Treatment</button>
+                <button class="mutebtn" onclick="showScreen('home')">❌ Cancel</button>
+              </div>
+            </div>
+
+            <div id="screen-alerts" style="display:none">
+              <div style="font-weight:700;font-size:16px;margin-bottom:8px">⚠️ Active Alerts</div>
+              <div class="small" style="margin-bottom:16px">Withdrawal periods & compliance warnings</div>
+              
+              <div style="display:flex;flex-direction:column;gap:8px">
+                <div style="padding:12px;background:#fff7ed;border-radius:8px;border-left:4px solid #f59e0b">
+                  <div style="font-weight:600;color:#92400e">🕒 Withdrawal Period Active</div>
+                  <div class="small" style="color:#92400e">COW-092: Do not sell milk for 3 more days</div>
+                </div>
+                
+                <div style="padding:12px;background:#fef2f2;border-radius:8px;border-left:4px solid #ef4444">
+                  <div style="font-weight:600;color:#dc2626">🧪 Sample Flagged</div>
+                  <div class="small" style="color:#dc2626">MRL levels elevated - collect follow-up sample</div>
+                </div>
+                
+                <div style="padding:12px;background:#f0fdf4;border-radius:8px;border-left:4px solid #22c55e">
+                  <div style="font-weight:600;color:#16a34a">✅ Treatment Complete</div>
+                  <div class="small" style="color:#16a34a">BUF-015: Recovery confirmed, ready for production</div>
+                </div>
+              </div>
+            </div>
+
+            <div id="screen-stats" style="display:none">
+              <div style="font-weight:700;font-size:16px;margin-bottom:8px">📊 Farm Statistics</div>
+              <div class="small" style="margin-bottom:16px">Monthly performance overview</div>
+              
+              <div style="display:flex;flex-direction:column;gap:12px">
+                <div class="stat-card">
+                  <div style="display:flex;justify-content:space-between;align-items:center">
+                    <span style="font-size:13px;font-weight:600">Milk Production</span>
+                    <span style="font-size:16px;font-weight:800;color:var(--primary)">2,340L</span>
+                  </div>
+                  <div class="small">↗️ +12% from last month</div>
+                </div>
+                
+                <div class="stat-card">
+                  <div style="display:flex;justify-content:space-between;align-items:center">
+                    <span style="font-size:13px;font-weight:600">Treatment Cost</span>
+                    <span style="font-size:16px;font-weight:800;color:#f59e0b">₹8,420</span>
+                  </div>
+                  <div class="small">↘️ -8% from last month</div>
+                </div>
+                
+                <div class="stat-card">
+                  <div style="display:flex;justify-content:space-between;align-items:center">
+                    <span style="font-size:13px;font-weight:600">Health Score</span>
+                    <span style="font-size:16px;font-weight:800;color:var(--success)">94/100</span>
+                  </div>
+                  <div class="small">🎯 Excellent condition</div>
+                </div>
+              </div>
+              
+              <div style="margin-top:16px">
+                <div style="font-weight:600;margin-bottom:8px">📈 Recent Activity</div>
+                <div class="activity-item">
+                  <div class="activity-time">2 hours ago</div>
+                  <div class="activity-desc">Treatment recorded for COW-023</div>
+                </div>
+                <div class="activity-item">
+                  <div class="activity-time">1 day ago</div>
+                  <div class="activity-desc">Milk sample collected and tested</div>
+                </div>
+                <div class="activity-item">
+                  <div class="activity-time">2 days ago</div>
+                  <div class="activity-desc">Vet visit completed - all animals healthy</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:16px">
+          <strong style="font-size:14px">📋 App Development Notes</strong>
+          <ul style="margin-top:8px;color:var(--muted);font-size:13px;line-height:1.6">
+            <li>Built with React Native for cross-platform compatibility</li>
+            <li>Offline-first architecture with SQLite local storage</li>
+            <li>End-to-end encryption for sensitive farm data</li>
+            <li>Biometric authentication for secure access</li>
+          </ul>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <script>
+    function showScreen(id){
+      ['home','record','alerts','stats'].forEach(s=>
+        document.getElementById('screen-'+s).style.display = (s===id)?'block':'none'
+      )
+      
+      // Update nav button states
+      document.querySelectorAll('.mutebtn').forEach(btn => {
+        btn.style.background = '#f1f5f9'
+        btn.style.color = '#6b7280'
+      })
+      
+      event.target.style.background = 'var(--primary)'
+      event.target.style.color = 'white'
+    }
+
+    function submitTreatment(){
+      const farm = document.getElementById('f-farm').value || 'KRN-001'
+      const animal = document.getElementById('f-animal').value || 'Cow - ID: COW-001'
+      const drug = document.getElementById('f-drug').value || 'Oxytet 10mg'
+      
+      alert(`✅ Treatment Recorded Successfully!\n\nFarm: ${farm}\nAnimal: ${animal}\nDrug: ${drug}\n\n🔐 Data encrypted and stored securely\n📡 Will sync when online`)
+      
+      // Clear form
+      document.getElementById('f-farm').value = ''
+      document.getElementById('f-animal').selectedIndex = 0
+      document.getElementById('f-drug').value = ''
+      
+      showScreen('home')
+    }
+
+    // Initialize with home screen
+    showScreen('home')
+  </script>
+</body>
+</html>

@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Reports - Digital Farm Management Portal</title>
+  <meta name="description" content="Generate and view compliance reports for farm management" />
+  <style>
+    :root{--bg:#f6f5f2;--card:#ffffff;--muted:#6b7280;--accent:#0f172a;--primary:#0b6cff;--success:#1ea67a}
+    *{box-sizing:border-box;font-family:Inter,ui-sans-serif,system-ui,Arial,Helvetica,sans-serif}
+    body{margin:0;background:linear-gradient(180deg,#fbfaf8 0%,#f6f5f2 100%);color:var(--accent);min-height:100vh}
+    
+    /* Enhanced Header */
+    header{
+      background:rgba(255,255,255,0.95);
+      backdrop-filter:blur(10px);
+      border-bottom:1px solid rgba(11,17,34,0.1);
+      box-shadow:0 4px 20px rgba(11,17,34,0.08);
+      position:sticky;
+      top:0;
+      z-index:100;
+    }
+    .header-content{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:16px 28px;
+      max-width:1400px;
+      margin:0 auto;
+    }
+    .brand{display:flex;gap:16px;align-items:center}
+    .logo{
+      width:48px;
+      height:48px;
+      border-radius:12px;
+      background:linear-gradient(135deg,#0b6cff,#4f46e5);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:white;
+      font-weight:800;
+      font-size:18px;
+      box-shadow:0 4px 12px rgba(11,108,255,0.3);
+    }
+    .title{font-size:20px;font-weight:700;color:var(--accent)}
+    .subtitle{font-size:13px;color:var(--muted);margin-top:2px}
+    
+    .nav-links{display:flex;gap:8px;align-items:center}
+    .nav-link{
+      padding:10px 16px;
+      border-radius:8px;
+      text-decoration:none;
+      color:var(--muted);
+      font-weight:600;
+      font-size:14px;
+      transition:all 0.2s ease;
+      border:1px solid transparent;
+    }
+    .nav-link:hover{background:rgba(11,108,255,0.08);color:var(--primary)}
+    .nav-link.active{background:var(--primary);color:white;box-shadow:0 2px 8px rgba(11,108,255,0.3)}
+    
+    .header-actions{display:flex;gap:12px;align-items:center}
+    .team-badge{
+      padding:6px 12px;
+      background:linear-gradient(90deg,#f8f9fa,#e9ecef);
+      border-radius:6px;
+      font-size:12px;
+      color:var(--muted);
+      font-weight:600;
+    }
+    
+    main{padding:24px;max-width:1400px;margin:0 auto}
+    .panel{background:var(--card);border-radius:16px;padding:24px;box-shadow:0 8px 32px rgba(11,17,34,0.06);border:1px solid rgba(11,17,34,0.04)}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:8px;background:var(--primary);color:white;font-weight:600;border:none;cursor:pointer;transition:all 0.2s ease;text-decoration:none}
+    .btn:hover{background:#0952cc;transform:translateY(-1px)}
+    .btn-secondary{background:#f1f5f9;color:var(--accent)}
+    .btn-secondary:hover{background:#e2e8f0}
+    .grid{display:grid;gap:20px}
+    .grid-2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+    .grid-3{grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+    .report-card{
+      background:linear-gradient(135deg,#fff,#f8fafc);
+      border:1px solid rgba(11,17,34,0.08);
+      border-radius:12px;
+      padding:20px;
+      transition:all 0.2s ease;
+      cursor:pointer;
+    }
+    .report-card:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(11,17,34,0.1)}
+    .report-title{font-weight:700;font-size:16px;margin-bottom:8px}
+    .report-desc{color:var(--muted);font-size:14px;line-height:1.5}
+    .report-meta{display:flex;justify-content:space-between;align-items:center;margin-top:16px;font-size:12px;color:var(--muted)}
+    .status-badge{
+      padding:4px 8px;
+      border-radius:4px;
+      font-weight:600;
+      font-size:11px;
+    }
+    .status-ready{background:#dcfce7;color:#166534}
+    .status-processing{background:#fef3c7;color:#92400e}
+    .status-error{background:#fee2e2;color:#991b1b}
+    
+    @media(max-width:768px){
+      .header-content{padding:12px 16px}
+      .nav-links{display:none}
+      main{padding:16px}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <div class="brand">
+        <div class="logo">FM</div>
+        <div>
+          <div class="title">Digital Farm Management Portal</div>
+          <div class="subtitle">MRL & AMU Compliance System</div>
+        </div>
+      </div>
+      
+      <nav class="nav-links">
+        <a href="dashboard.html" class="nav-link">Dashboard</a>
+        <a href="mobile-preview.html" class="nav-link">Mobile App</a>
+        <a href="reports.html" class="nav-link active">Reports</a>
+        <a href="settings.html" class="nav-link">Settings</a>
+      </nav>
+      
+      <div class="header-actions">
+        <div class="team-badge">Team Renaissance</div>
+        <button class="btn">📧 Share Report</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div style="margin-bottom:24px">
+      <h1 style="margin:0;font-size:28px;font-weight:800">📊 Reports & Analytics</h1>
+      <p style="color:var(--muted);margin:8px 0 0 0">Generate comprehensive compliance reports and export certificates</p>
+    </div>
+
+    <div class="panel" style="margin-bottom:24px">
+      <h3 style="margin:0 0 16px 0;font-size:18px">🚀 Quick Actions</h3>
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <button class="btn" onclick="generateReport('monthly')">📈 Generate Monthly Report</button>
+        <button class="btn btn-secondary" onclick="exportData('csv')">📄 Export CSV</button>
+        <button class="btn btn-secondary" onclick="exportData('pdf')">📋 Export PDF</button>
+        <button class="btn btn-secondary" onclick="requestCertificate()">🏆 Request Certificate</button>
+      </div>
+    </div>
+
+    <div class="grid grid-3" style="margin-bottom:24px">
+      <div class="panel" style="text-align:center">
+        <div style="font-size:36px;font-weight:800;color:var(--primary)">1,248</div>
+        <div style="color:var(--muted);margin-top:8px">Total Records</div>
+        <div style="font-size:12px;color:var(--success);margin-top:4px">↑ 12% from last month</div>
+      </div>
+      <div class="panel" style="text-align:center">
+        <div style="font-size:36px;font-weight:800;color:var(--success)">93%</div>
+        <div style="color:var(--muted);margin-top:8px">Compliance Rate</div>
+        <div style="font-size:12px;color:var(--success);margin-top:4px">↑ 3% from last month</div>
+      </div>
+      <div class="panel" style="text-align:center">
+        <div style="font-size:36px;font-weight:800;color:#f59e0b">42</div>
+        <div style="color:var(--muted);margin-top:8px">Active Alerts</div>
+        <div style="font-size:12px;color:#ef4444;margin-top:4px">↓ 8% from last month</div>
+      </div>
+    </div>
+
+    <div class="grid grid-2">
+      <div>
+        <h3 style="margin:0 0 16px 0">📋 Available Reports</h3>
+        <div class="grid" style="gap:12px">
+          <div class="report-card" onclick="viewReport('compliance')">
+            <div class="report-title">🎯 MRL Compliance Report</div>
+            <div class="report-desc">Detailed analysis of Maximum Residue Limits compliance across all farms</div>
+            <div class="report-meta">
+              <span>Last generated: 3 days ago</span>
+              <span class="status-badge status-ready">Ready</span>
+            </div>
+          </div>
+
+          <div class="report-card" onclick="viewReport('amu')">
+            <div class="report-title">💊 AMU Usage Report</div>
+            <div class="report-desc">Antimicrobial usage patterns and trends analysis</div>
+            <div class="report-meta">
+              <span>Last generated: 1 week ago</span>
+              <span class="status-badge status-ready">Ready</span>
+            </div>
+          </div>
+
+          <div class="report-card" onclick="viewReport('farm')">
+            <div class="report-title">🏡 Farm Performance Report</div>
+            <div class="report-desc">Individual farm compliance scores and improvement recommendations</div>
+            <div class="report-meta">
+              <span>Generating...</span>
+              <span class="status-badge status-processing">Processing</span>
+            </div>
+          </div>
+
+          <div class="report-card" onclick="viewReport('audit')">
+            <div class="report-title">📜 Audit Trail Report</div>
+            <div class="report-desc">Complete audit trail with blockchain verification</div>
+            <div class="report-meta">
+              <span>Last generated: 2 days ago</span>
+              <span class="status-badge status-ready">Ready</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h3 style="margin:0 0 16px 0">🏆 Certifications</h3>
+        <div class="panel">
+          <div style="margin-bottom:16px">
+            <strong>Export Readiness Certificate</strong>
+            <div style="color:var(--muted);font-size:14px;margin-top:4px">Valid for international export compliance</div>
+            <div style="margin-top:8px">
+              <span class="status-badge status-ready">✅ Active</span>
+              <span style="margin-left:8px;font-size:12px;color:var(--muted)">Expires: Dec 15, 2025</span>
+            </div>
+          </div>
+          
+          <div style="margin-bottom:16px">
+            <strong>Organic Compliance Certificate</strong>
+            <div style="color:var(--muted);font-size:14px;margin-top:4px">Certified organic farming practices</div>
+            <div style="margin-top:8px">
+              <span class="status-badge status-processing">🔄 Renewing</span>
+              <span style="margin-left:8px;font-size:12px;color:var(--muted)">Expected: Oct 20, 2025</span>
+            </div>
+          </div>
+
+          <button class="btn" style="margin-top:12px" onclick="requestCertificate()">📜 Request New Certificate</button>
+        </div>
+
+        <h3 style="margin:24px 0 16px 0">📈 Report Schedule</h3>
+        <div class="panel">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+            <span>Weekly Compliance Summary</span>
+            <label style="cursor:pointer">
+              <input type="checkbox" checked style="margin-right:8px">
+              <span style="font-size:12px;color:var(--success)">Enabled</span>
+            </label>
+          </div>
+          
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+            <span>Monthly Performance Report</span>
+            <label style="cursor:pointer">
+              <input type="checkbox" checked style="margin-right:8px">
+              <span style="font-size:12px;color:var(--success)">Enabled</span>
+            </label>
+          </div>
+          
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span>Quarterly Audit Report</span>
+            <label style="cursor:pointer">
+              <input type="checkbox" style="margin-right:8px">
+              <span style="font-size:12px;color:var(--muted)">Disabled</span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    function generateReport(type) {
+      alert(`Generating ${type} report... This will be sent to your email when ready.`);
+    }
+
+    function exportData(format) {
+      if (format === 'csv') {
+        // Sample CSV download
+        const csvData = "Farm ID,Animal,Drug,Dosage,Date,Status\nKRN-001,Cow,Oxytet 10mg,2 doses,2025-09-08,Compliant\nKRN-023,Goat,Enrofloxacin 5mg,1 dose,2025-09-07,Non-compliant";
+        const blob = new Blob([csvData], {type: 'text/csv'});
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'farm-report.csv';
+        a.click();
+        URL.revokeObjectURL(url);
+      } else {
+        alert(`Exporting data as ${format.toUpperCase()}... Download will start shortly.`);
+      }
+    }
+
+    function viewReport(type) {
+      alert(`Opening ${type} report viewer...`);
+    }
+
+    function requestCertificate() {
+      alert('Certificate request submitted. You will receive an email when it\'s ready for download.');
+    }
+  </script>
+</body>
+</html>

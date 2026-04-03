@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Dashboard - Digital Farm Management Portal</title>
+  <meta name="description" content="Digital Farm Management Portal for MRL & AMU Compliance" />
+  <meta name="author" content="Team Renaissance" />
+  <style>
+    :root{--bg:#f6f5f2;--card:#ffffff;--muted:#6b7280;--accent:#0f172a;--primary:#0b6cff;--success:#1ea67a}
+    *{box-sizing:border-box;font-family:Inter,ui-sans-serif,system-ui,Arial,Helvetica,sans-serif}
+    body{margin:0;background:linear-gradient(180deg,#fbfaf8 0%,#f6f5f2 100%);color:var(--accent);min-height:100vh}
+    
+    /* Enhanced Header */
+    header{
+      background:rgba(255,255,255,0.95);
+      backdrop-filter:blur(10px);
+      border-bottom:1px solid rgba(11,17,34,0.1);
+      box-shadow:0 4px 20px rgba(11,17,34,0.08);
+      position:sticky;
+      top:0;
+      z-index:100;
+    }
+    .header-content{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:16px 28px;
+      max-width:1400px;
+      margin:0 auto;
+    }
+    .brand{display:flex;gap:16px;align-items:center}
+    .logo{
+      width:48px;
+      height:48px;
+      border-radius:12px;
+      background:linear-gradient(135deg,#0b6cff,#4f46e5);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:white;
+      font-weight:800;
+      font-size:18px;
+      box-shadow:0 4px 12px rgba(11,108,255,0.3);
+    }
+    .title{font-size:20px;font-weight:700;color:var(--accent)}
+    .subtitle{font-size:13px;color:var(--muted);margin-top:2px}
+    
+    .nav-links{display:flex;gap:8px;align-items:center}
+    .nav-link{
+      padding:10px 16px;
+      border-radius:8px;
+      text-decoration:none;
+      color:var(--muted);
+      font-weight:600;
+      font-size:14px;
+      transition:all 0.2s ease;
+      border:1px solid transparent;
+    }
+    .nav-link:hover{background:rgba(11,108,255,0.08);color:var(--primary)}
+    .nav-link.active{background:var(--primary);color:white;box-shadow:0 2px 8px rgba(11,108,255,0.3)}
+    
+    .header-actions{display:flex;gap:12px;align-items:center}
+    .team-badge{
+      padding:6px 12px;
+      background:linear-gradient(90deg,#f8f9fa,#e9ecef);
+      border-radius:6px;
+      font-size:12px;
+      color:var(--muted);
+      font-weight:600;
+    }
+    
+    main{padding:24px;max-width:1400px;margin:0 auto}
+    .panel{background:var(--card);border-radius:16px;padding:24px;box-shadow:0 8px 32px rgba(11,17,34,0.06);border:1px solid rgba(11,17,34,0.04)}
+    .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
+    .kpi{
+      padding:20px;
+      border-radius:12px;
+      background:linear-gradient(180deg,#fff,#fbfdff);
+      border:1px solid rgba(11,17,34,0.04);
+      transition:transform 0.2s ease;
+    }
+    .kpi:hover{transform:translateY(-2px)}
+    .kpi .num{font-size:32px;font-weight:800;color:var(--accent)}
+    .kpi .lbl{font-size:14px;color:var(--muted);margin-top:8px;font-weight:500}
+    .chart{margin-top:16px;height:280px}
+    table{width:100%;border-collapse:collapse;margin-top:16px}
+    th,td{padding:12px;text-align:left;border-bottom:1px solid #eef2f7;font-size:14px}
+    th{color:var(--muted);font-weight:600;background:rgba(11,17,34,0.02)}
+    .pill{display:inline-block;padding:6px 12px;border-radius:999px;background:#eefaf6;color:var(--success);font-weight:600;font-size:12px}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:8px;background:var(--primary);color:white;font-weight:600;border:none;cursor:pointer;transition:all 0.2s ease}
+    .btn:hover{background:#0952cc;transform:translateY(-1px)}
+    .mutebtn{background:#f1f5f9;color:var(--muted);font-weight:600;border:none;padding:10px 16px;border-radius:8px;cursor:pointer;transition:all 0.2s ease}
+    .mutebtn:hover{background:#e2e8f0}
+    .small{font-size:12px;color:var(--muted)}
+    .tabs{display:flex;gap:4px;margin-top:16px;background:#f8fafc;padding:4px;border-radius:10px}
+    .tab{padding:10px 16px;border-radius:8px;cursor:pointer;font-weight:600;transition:all 0.2s ease;color:var(--muted)}
+    .tab.active{background:white;color:var(--accent);box-shadow:0 2px 8px rgba(11,17,34,0.1)}
+    .mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .stat-box{padding:16px;border-radius:12px;background:linear-gradient(135deg,#fff,#fbfdff);font-weight:700;border:1px solid rgba(11,17,34,0.04)}
+    
+    @media(max-width:768px){
+      .header-content{padding:12px 16px}
+      .nav-links{display:none}
+      main{padding:16px}
+      .kpis{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <div class="brand">
+        <div class="logo">FM</div>
+        <div>
+          <div class="title">Digital Farm Management Portal</div>
+          <div class="subtitle">MRL & AMU Compliance System</div>
+        </div>
+      </div>
+      
+      <nav class="nav-links">
+        <a href="dashboard.html" class="nav-link active">Dashboard</a>
+        <a href="mobile-preview.html" class="nav-link">Mobile App</a>
+        <a href="reports.html" class="nav-link">Reports</a>
+        <a href="settings.html" class="nav-link">Settings</a>
+      </nav>
+      
+      <div class="header-actions">
+        <div class="team-badge">Team Renaissance</div>
+        <button class="btn">Export Data</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="panel">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <h2 style="margin:0;font-size:24px;font-weight:700">Overview Dashboard</h2>
+        <div class="small" style="background:#e0f2fe;padding:6px 12px;border-radius:6px;color:#0369a1;font-weight:600" id="location-display">
+          📍 Pilot Region: <span id="location-text">Detecting location...</span>
+        </div>
+      </div>
+
+      <div class="tabs" role="tablist" aria-label="dashboard tabs">
+        <div class="tab active" onclick="switchTab('overview')">Overview</div>
+        <div class="tab" onclick="switchTab('vet')">Vet Dashboard</div>
+        <div class="tab" onclick="switchTab('admin')">Admin Panel</div>
+      </div>
+
+      <div id="tab-overview" style="margin-top:20px">
+        <div class="kpis">
+          <div class="kpi">
+            <div class="num" id="kpi1">1,248</div>
+            <div class="lbl">📊 Records (this month)</div>
+          </div>
+          <div class="kpi">
+            <div class="num" id="kpi2">93%</div>
+            <div class="lbl">✅ Compliance rate (MRL)</div>
+          </div>
+          <div class="kpi">
+            <div class="num" id="kpi3">42</div>
+            <div class="lbl">⚠️ Active Alerts</div>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:2fr 1fr;gap:20px;margin-top:24px">
+          <div class="panel">
+            <strong style="font-size:16px">📈 AMU Trend (last 12 weeks)</strong>
+            <div class="chart" id="chart-line"></div>
+          </div>
+
+          <div class="panel">
+            <strong style="font-size:16px">🎯 Residue Status</strong>
+            <div class="chart" id="chart-pie" style="height:200px"></div>
+          </div>
+        </div>
+
+        <div class="panel" style="margin-top:20px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+            <strong style="font-size:16px">📋 Recent Treatment Records</strong>
+            <button class="mutebtn" onclick="filterNonCompliant()">Show Non-compliant Only</button>
+          </div>
+
+          <table aria-label="treatments">
+            <thead><tr><th>Farm ID</th><th>Animal</th><th>Drug</th><th>Dosage</th><th>Date</th><th>Status</th></tr></thead>
+            <tbody id="records"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div id="tab-vet" style="display:none;margin-top:20px">
+        <div class="mini-grid">
+          <div class="stat-box">
+            <div style="font-size:14px;color:var(--muted)">Pending Verifications</div>
+            <div style="font-size:28px;font-weight:800;margin-top:8px">18</div>
+          </div>
+          <div class="stat-box">
+            <div style="font-size:14px;color:var(--muted)">Open Cases</div>
+            <div style="font-size:28px;font-weight:800;margin-top:8px">6</div>
+          </div>
+        </div>
+        
+        <div class="panel" style="margin-top:16px">
+          <strong style="font-size:16px">🏥 Vet Tasks</strong>
+          <ul style="margin-top:12px;color:var(--muted);line-height:1.6">
+            <li>Review flagged samples and mark verified</li>
+            <li>Approve vet prescriptions</li>
+            <li>Schedule follow-up tests</li>
+          </ul>
+          <button class="btn" style="margin-top:12px" onclick="alert('Open vet verification UI (demo)')">Open Verification</button>
+        </div>
+
+        <div class="panel" style="margin-top:16px">
+          <strong style="font-size:16px">🚩 Flagged Samples</strong>
+          <table style="margin-top:12px">
+            <thead><tr><th>Sample ID</th><th>Farm</th><th>Result</th><th>Action</th></tr></thead>
+            <tbody>
+              <tr>
+                <td>SMP-1001</td>
+                <td>KRN-023</td>
+                <td style="color:#ff4d6d;font-weight:700">Close to MRL</td>
+                <td><button class="mutebtn" onclick="alert('Assign case')">Assign</button></td>
+              </tr>
+              <tr>
+                <td>SMP-1002</td>
+                <td>KRN-011</td>
+                <td style="color:#1ea67a;font-weight:700">Passed</td>
+                <td><button class="mutebtn">Details</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div id="tab-admin" style="display:none;margin-top:20px">
+        <div class="panel">
+          <strong style="font-size:16px">⚙️ Admin Controls</strong>
+          <div style="margin-top:8px;color:var(--muted)">
+            Manage users, vet approvals, export certificates, and system settings.
+          </div>
+          <div style="display:flex;gap:12px;margin-top:16px;flex-wrap:wrap">
+            <button class="btn" onclick="alert('Manage users (demo)')">Manage Users</button>
+            <button class="mutebtn" onclick="alert('System settings')">Settings</button>
+            <button class="mutebtn" onclick="alert('Export logs')">Export Logs</button>
+          </div>
+        </div>
+
+        <div style="margin-top:16px">
+          <strong style="font-size:16px">📊 System Health</strong>
+          <div class="mini-grid" style="margin-top:12px">
+            <div class="stat-box">
+              <div style="font-weight:700;color:var(--success)">API Uptime</div>
+              <div class="small">99.9% (24h)</div>
+            </div>
+            <div class="stat-box">
+              <div style="font-weight:700;color:var(--primary)">DB Storage</div>
+              <div class="small">120 GB used</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Sample data
+    const weeks = Array.from({length:12},(_,i)=>`W${i+1}`)
+    const values = [40,35,38,30,28,25,20,22,26,30,35,32]
+    const residue = {below:72,near:18,above:10}
+
+    function switchTab(name){
+      document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+      document.querySelectorAll('.tab').forEach(t=>{ 
+        if(t.textContent.toLowerCase().includes(name)){ 
+          t.classList.add('active')
+        }
+      });
+      document.getElementById('tab-overview').style.display = name==='overview'? 'block':'none'
+      document.getElementById('tab-vet').style.display = name==='vet'? 'block':'none'
+      document.getElementById('tab-admin').style.display = name==='admin'? 'block':'none'
+    }
+
+    // Line chart (SVG)
+    function renderLine(){
+      const w = 800, h = 240, pad = 40
+      const max = Math.max(...values), min = Math.min(...values)
+      const points = values.map((v,i)=>{
+        const x = pad + (i/(values.length-1))*(w-2*pad)
+        const y = pad + (1 - (v-min)/(max-min))*(h-2*pad)
+        return `${x},${y}`
+      }).join(' ')
+      const svg = `<svg viewBox="0 0 ${w} ${h}" width="100%" height="100%">
+        <defs>
+          <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#0b6cff;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#4f46e5;stop-opacity:1" />
+          </linearGradient>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+            <feMerge> 
+              <feMergeNode in="coloredBlur"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+        </defs>
+        <polyline points="${points}" fill="none" stroke="url(#lineGradient)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)" />
+        ${values.map((v,i)=>{ 
+          const x = pad + (i/(values.length-1))*(w-2*pad); 
+          const y = pad + (1 - (v-min)/(max-min))*(h-2*pad); 
+          return `<circle cx="${x}" cy="${y}" r="6" fill="white" stroke="#0b6cff" stroke-width="3"></circle>
+                  <text x="${x}" y="${y-12}" font-size="12" fill="#0f172a" text-anchor="middle" font-weight="600">${v}</text>`
+        }).join('')}
+        ${weeks.map((wk,i)=>{ 
+          const x = pad + (i/(values.length-1))*(w-2*pad); 
+          return `<text x="${x}" y="${h-8}" font-size="12" fill="#6b7280" text-anchor="middle">${wk}</text>`
+        }).join('')}
+      </svg>`
+      document.getElementById('chart-line').innerHTML = svg
+    }
+
+    // Pie chart (SVG)
+    function renderPie(){
+      const total = residue.below + residue.near + residue.above
+      const segments = [residue.below, residue.near, residue.above]
+      const colors = ['#1ea67a','#f59e0b','#ef4444']
+      let angle = -90
+      const r = 70, cx=100, cy=100
+      const paths = segments.map((seg,idx)=>{
+        const frac = seg/total
+        const a1 = angle
+        const a2 = angle + frac*360
+        const large = (a2-a1)>180?1:0
+        const x1 = cx + r * Math.cos(a1*Math.PI/180)
+        const y1 = cy + r * Math.sin(a1*Math.PI/180)
+        const x2 = cx + r * Math.cos(a2*Math.PI/180)
+        const y2 = cy + r * Math.sin(a2*Math.PI/180)
+        angle = a2
+        return `<path d="M ${cx} ${cy} L ${x1} ${y1} A ${r} ${r} 0 ${large} 1 ${x2} ${y2} Z" fill="${colors[idx]}"></path>`
+      }).join('')
+      
+      const labels = `<g transform="translate(200,40)" font-size="13" fill="#0f172a">
+        <circle cx="0" cy="0" r="4" fill="${colors[0]}"/>
+        <text x="12" y="4">Below MRL (${residue.below}%)</text>
+        <circle cx="0" cy="20" r="4" fill="${colors[1]}"/>
+        <text x="12" y="24">Near MRL (${residue.near}%)</text>
+        <circle cx="0" cy="40" r="4" fill="${colors[2]}"/>
+        <text x="12" y="44">Above MRL (${residue.above}%)</text>
+      </g>`
+      
+      const svg = `<svg viewBox="0 0 360 200" width="100%" height="100%">${paths}${labels}</svg>`
+      document.getElementById('chart-pie').innerHTML = svg
+    }
+
+    // Sample records
+    const sampleRecords = [
+      {farm:'KRN-001',animal:'Cow',drug:'Oxytet 10mg',dosage:'2 doses',date:'2025-09-08',status:'Compliant'},
+      {farm:'KRN-023',animal:'Goat',drug:'Enrofloxacin 5mg',dosage:'1 dose',date:'2025-09-07',status:'Non-compliant'},
+      {farm:'KRN-011',animal:'Cow',drug:'Tylosin 5mg',dosage:'1 dose',date:'2025-09-06',status:'Compliant'},
+      {farm:'KRN-044',animal:'Buffalo',drug:'Oxytet 10mg',dosage:'3 doses',date:'2025-09-05',status:'Compliant'},
+      {farm:'KRN-007',animal:'Cow',drug:'Penicillin 5mg',dosage:'1 dose',date:'2025-09-04',status:'Compliant'}
+    ]
+
+    function renderRecords(records=sampleRecords){
+      const tbody = document.getElementById('records')
+      tbody.innerHTML = records.map(r=>`
+        <tr style="transition:background 0.2s ease" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='transparent'">
+          <td style="font-weight:600">${r.farm}</td>
+          <td>${r.animal}</td>
+          <td>${r.drug}</td>
+          <td>${r.dosage}</td>
+          <td>${r.date}</td>
+          <td>${r.status=='Compliant'?'<span class="pill">✅ Compliant</span>':'<span style="color:#ef4444;font-weight:700;background:#fef2f2;padding:4px 8px;border-radius:4px">❌ Non-compliant</span>'}</td>
+        </tr>
+      `).join('')
+    }
+
+    function filterNonCompliant(){ 
+      renderRecords(sampleRecords.filter(r=>r.status!=='Compliant')) 
+    }
+
+    function downloadCSV(){
+      const rows = [['Farm','Animal','Drug','Dosage','Date','Status'], ...sampleRecords.map(r=>[r.farm,r.animal,r.drug,r.dosage,r.date,r.status])]
+      const csv = rows.map(r=>r.map(c=>`"${String(c).replace(/"/g,'""')}"`).join(',')).join('\n')
+      const blob = new Blob([csv],{type:'text/csv'}); const url = URL.createObjectURL(blob)
+      const a = document.createElement('a'); a.href=url; a.download='farm-records.csv'; a.click(); URL.revokeObjectURL(url)
+    }
+
+    // Location detection
+    function detectLocation() {
+      const locationText = document.getElementById('location-text')
+      
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          async function(position) {
+            try {
+              const lat = position.coords.latitude
+              const lon = position.coords.longitude
+              
+              // Use reverse geocoding to get location name
+              const response = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`)
+              const data = await response.json()
+              
+              let locationName = data.city || data.locality || data.principalSubdivision || 'Unknown Location'
+              if (data.principalSubdivision && data.principalSubdivision !== locationName) {
+                locationName += `, ${data.principalSubdivision}`
+              }
+              
+              locationText.textContent = locationName
+              locationText.title = `Coordinates: ${lat.toFixed(4)}, ${lon.toFixed(4)}`
+            } catch (error) {
+              console.error('Error getting location name:', error)
+              locationText.textContent = `Lat: ${position.coords.latitude.toFixed(4)}, Lon: ${position.coords.longitude.toFixed(4)}`
+            }
+          },
+          function(error) {
+            console.error('Geolocation error:', error)
+            switch(error.code) {
+              case error.PERMISSION_DENIED:
+                locationText.textContent = "Location access denied"
+                break
+              case error.POSITION_UNAVAILABLE:
+                locationText.textContent = "Location unavailable"
+                break
+              case error.TIMEOUT:
+                locationText.textContent = "Location timeout"
+                break
+              default:
+                locationText.textContent = "Karnataka (default)"
+                break
+            }
+          },
+          {
+            enableHighAccuracy: true,
+            timeout: 10000,
+            maximumAge: 300000
+          }
+        )
+      } else {
+        locationText.textContent = "Geolocation not supported"
+      }
+    }
+
+    // Initialize
+    renderLine(); renderPie(); renderRecords(); detectLocation()
+  </script>
+</body>
+</html>
