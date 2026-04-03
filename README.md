@@ -46,21 +46,21 @@ To ensure data integrity and prevent "paper-trail" manipulation, this portal uti
   <img src="Dashboard_Preview.png" width="850" title="System Architecture">
 </p>
 
----
+--
 
 ### Mobile App Preview
 <p align="center">
   <img src="Mobile_App_Preview.png" width="850" title="System Architecture">
 </p>
 
----
+--
 
 ### Reports Preview
 <p align="center">
   <img src="Reports_Preview.png" width="850" title="System Architecture">
 </p>
 
----
+--
 
 ### Settings Preview
 <p align="center">
