@@ -41,7 +41,7 @@ To ensure data integrity and prevent "paper-trail" manipulation, this portal uti
 
 ## System Preview
 <p align="center">
-  <img src="https://via.placeholder.com/850x400.png?text=Architecture+Diagram+%26+Dashboard+Preview" width="850" title="System Architecture">
+  <img src="System_Overview.png" width="850" title="System Architecture">
 </p>
 
 ---
