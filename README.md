@@ -1,12 +1,6 @@
 <div align="center">
   <h1>Digital Farm Management Portal</h1>
   <p><strong>Blockchain-Enabled Livestock Compliance & Real-time Monitoring</strong></p>
-  
-  <p>
-    <img src="https://img.shields.io/badge/Blockchain-363636?style=for-the-badge&logo=hyperledger&logoColor=white" alt="Blockchain" />
-    <img src="https://img.shields.io/badge/Cloud_Architecture-0078D4?style=for-the-badge&logo=microsoft-azure&logoColor=white" alt="Cloud" />
-    <img src="https://img.shields.io/badge/IoT_Alerts-FFA500?style=for-the-badge&logo=smartthings&logoColor=white" alt="Smart Alerts" />
-  </p>
 </div>
 
 ---
